@@ -1,7 +1,7 @@
 // CrowApi.cpp : Este arquivo contém a função 'main'. A execução do programa começa e termina ali.
 //
 
-#include <crow.h>
+#include "crow.h"
 
 int main(int argc, char **array)
 {
@@ -12,6 +12,20 @@ int main(int argc, char **array)
 
 		return page;
 		});
+
+	CROW_ROUTE(app, "/api/todos")
+	 	.methods("POST"_method)([](
+		const crow::request& req){
+
+		 auto x = crow::json::load(req.body);
+          if (!x)
+              return crow::response(400);
+
+		 crow::json::wvalue res;
+		 res["mensagem"] = "Olá";
+
+		return crow::response(200, res);
+	});
 
 	app.port(18080)
 		.multithreaded()
