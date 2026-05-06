@@ -9,7 +9,7 @@
 
 int main(int argc, char** array) {
     std::vector<Todo> todos = {};
-    std::vector<User> users = {};
+    std::vector<User> users = {User{1, "name", "email", "password"}};
 
     crow::logger::setLogLevel(crow::LogLevel::Debug);
 

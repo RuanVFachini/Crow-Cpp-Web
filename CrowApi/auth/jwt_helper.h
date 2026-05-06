@@ -34,7 +34,7 @@ AuthResult decodeToken(const std::string& token) {
         verifier.verify(decoded);
 
         Principal p;
-        p.id = decoded.get_payload_claim("id").as_integer();
+        p.id = std::stoi(decoded.get_payload_claim("id").as_string());
         p.name = decoded.get_payload_claim("name").as_string();
         p.email = decoded.get_payload_claim("email").as_string();
 

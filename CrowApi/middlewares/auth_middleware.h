@@ -5,7 +5,7 @@ struct AuthMiddleware {
 
     void before_handle(crow::request& req, crow::response& res, context&) {
         try {
-            if (req.url == "/login") return;
+            if (req.url == "/api/auth/login") return;
 
             auto auth = req.get_header_value("Authorization");
 
