@@ -2,6 +2,8 @@
 
 #include <ranges>
 
+#include "../types/app_types.h"
+
 #define JWT_TYPE "JWT"
 #define JWT_ISSUER "my-app-issuer"
 #define JWT_SECRET "a83c513180b98b28d68e45eec62c5343e08cd0b8d59041a4b2bd1e52c376161f"
@@ -47,7 +49,7 @@ struct Token {
     }
 };
 
-inline void registerAuthRoutes(crow::SimpleApp& app, std::vector<User>& users) {
+inline void registerAuthRoutes(APP& app, std::vector<User>& users) {
     CROW_ROUTE(app, "/api/auth/register")
         .methods(crow::HTTPMethod::POST)([&users](const crow::request& req) {
             auto data = crow::json::load(req.body);

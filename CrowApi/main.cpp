@@ -2,8 +2,10 @@
 //
 
 #include "crow.h"
+#include "middlewares/auth_middleware.h"
 #include "routes/auth_routes.h"
 #include "routes/todo_routes.h"
+#include "types/app_types.h"
 
 int main(int argc, char** array) {
     std::vector<Todo> todos = {};
@@ -11,7 +13,7 @@ int main(int argc, char** array) {
 
     crow::logger::setLogLevel(crow::LogLevel::Debug);
 
-    crow::SimpleApp app;
+    APP app;
 
     registerTodoRoutes(app, todos);
     registerAuthRoutes(app, users);

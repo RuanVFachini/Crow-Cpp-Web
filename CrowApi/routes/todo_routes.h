@@ -1,3 +1,5 @@
+#include "../types/app_types.h"
+
 struct Todo {
     int id;
     std::string description;
@@ -17,7 +19,7 @@ struct Todo {
     }
 };
 
-inline void registerTodoRoutes(crow::SimpleApp& app, std::vector<Todo>& todos) {
+inline void registerTodoRoutes(APP& app, std::vector<Todo>& todos) {
     CROW_ROUTE(app, "/api/todos")
         .methods(crow::HTTPMethod::POST)([&todos](const crow::request& req) {
             auto data = crow::json::load(req.body);
