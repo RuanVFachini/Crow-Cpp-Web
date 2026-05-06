@@ -1,0 +1,33 @@
+# Top-level EditorConfig file
+root = true
+
+# Configuração geral
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# Arquivos C/C++
+[*.{cpp,c,h,hpp}]
+indent_style = space
+indent_size = 4
+
+# Arquivos de header (opcional separar)
+[*.{h,hpp}]
+indent_size = 4
+
+# Makefiles (tabs são padrão)
+[Makefile]
+indent_style = tab
+
+# CMake
+[*.cmake]
+indent_style = space
+indent_size = 2
+
+# Markdown (não quebrar trailing whitespace)
+[*.md]
+trim_trailing_whitespace = false
