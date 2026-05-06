@@ -1,24 +1,5 @@
 #include "../types/app_types.h"
 
-struct Todo {
-    int id;
-    std::string description;
-    bool completed;
-
-    static Todo fromJson(crow::json::rvalue $body, int id) {
-        return Todo{id, $body["description"].s(), false};
-    }
-
-    crow::json::wvalue toJson() const {
-        crow::json::wvalue item;
-        item["id"] = this->id;
-        item["description"] = this->description;
-        item["completed"] = this->completed;
-
-        return item;
-    }
-};
-
 inline void registerTodoRoutes(APP& app, std::vector<Todo>& todos) {
     CROW_ROUTE(app, "/api/todos")
         .methods(crow::HTTPMethod::POST)([&todos](const crow::request& req) {
