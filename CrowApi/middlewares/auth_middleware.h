@@ -1,14 +1,38 @@
+#include "../auth/jwt_helper.h"
+
 struct AuthMiddleware {
     struct context {};
 
     void before_handle(crow::request& req, crow::response& res, context&) {
-        if (req.url == "/login") return;
+        try {
+            if (req.url == "/login") return;
 
-        auto auth = req.get_header_value("Authorization");
+            auto auth = req.get_header_value("Authorization");
 
-        bool valid = false;
+            if (auth.empty()) {
+                res.code = 401;
+                res.end("Unauthorized");
+                return;
+            }
 
-        if (auth.empty() || !valid) {
+            std::string prefix = SCHEMA;
+
+            if (!auth.starts_with(prefix)) {
+                res.code = 401;
+                res.end("Unauthorized");
+                return;
+            }
+
+            auto token = auth.substr(prefix.length(), auth.length() - prefix.length());
+            auto result = JwtHelper::decodeToken(token);
+
+            if (!result.success) {
+                res.code = 401;
+                res.end("Unauthorized");
+                return;
+            }
+
+        } catch (const std::exception& e) {
             res.code = 401;
             res.end("Unauthorized");
             return;

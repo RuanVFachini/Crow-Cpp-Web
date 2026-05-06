@@ -61,3 +61,14 @@ struct Todo {
         return item;
     }
 };
+
+struct Principal {
+    int id;
+    std::string name;
+    std::string email;
+};
+
+struct AuthResult {
+    Principal principal;
+    bool success;
+};
