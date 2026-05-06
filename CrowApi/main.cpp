@@ -2,20 +2,25 @@
 //
 
 #include "crow.h"
+#include "routes/auth_routes.h"
 #include "routes/todo_routes.h"
 
 int main(int argc, char** array) {
     std::vector<Todo> todos = {};
+    std::vector<User> users = {};
+
+    crow::logger::setLogLevel(crow::LogLevel::Debug);
 
     crow::SimpleApp app;
 
     registerTodoRoutes(app, todos);
+    registerAuthRoutes(app, users);
 
-    CROW_ROUTE(app, "/")([]() {
-        auto page = crow::mustache::load_text("index.html");
+    // CROW_ROUTE(app, "/")([]() {
+    //     auto page = crow::mustache::load_text("index.html");
 
-        return page;
-    });
+    //     return page;
+    // });
 
     app.port(18080).multithreaded().run();
 
