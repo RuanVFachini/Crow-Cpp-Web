@@ -1,4 +1,16 @@
 ! #/bin/bash
 
-g++ ./CrowApi/main.cpp -o app  -g -lpthread -lssl -lcrypto
-./app
+g++ ./CrowApi/main.cpp  \
+    -std=c++20 \
+    -I./include \
+    -L./lib \
+    -lsoci_core \
+    -lsoci_postgresql \
+    -lpq \
+    -Wl,-rpath,'$ORIGIN/lib' \
+    -o app \
+    -g \
+    -lpthread \
+    -lssl \
+    -lcrypto
+# ./app
