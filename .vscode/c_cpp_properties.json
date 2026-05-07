@@ -9,7 +9,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/include",
-                "${workspaceFolder}/lib/"
+                "${workspaceFolder}/include/soci"
             ]
         }
     ],

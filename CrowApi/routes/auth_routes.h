@@ -1,33 +1,32 @@
+#include <optional>
 #include <ranges>
 
 #include "../auth/jwt_helper.h"
+#include "../repositories/user_repository.h"
 #include "../types/app_types.h"
 
-inline void registerAuthRoutes(APP& app, std::vector<User>& users) {
+inline void registerAuthRoutes(APP& app) {
     CROW_ROUTE(app, "/api/auth/register")
-        .methods(crow::HTTPMethod::POST)([&users](const crow::request& req) {
+        .methods(crow::HTTPMethod::POST)([](const crow::request& req) {
             auto data = crow::json::load(req.body);
             if (!data) return crow::response(400);
 
-            long id = users.size() + 1;
-            auto user = User::fromJson(data, (int)id);
-            users.push_back(user);
+            auto user = UserRepository::save(User::fromJson(data, 0));
 
             return crow::response(200, user.toJson());
         });
 
     CROW_ROUTE(app, "/api/auth/login")
-        .methods(crow::HTTPMethod::POST)([&users](const crow::request& req) {
+        .methods(crow::HTTPMethod::POST)([](const crow::request& req) {
             auto data = crow::json::load(req.body);
             if (!data) return crow::response(400);
 
             auto login = Login::fromJson(data);
-            auto user = std::find_if(users.begin(), users.end(),
-                                     [&](const User& u) { return u.email == login.email; });
+            auto user = UserRepository::findByEmail(login.email);
 
-            if (user == users.end()) return crow::response(401);
+            if (!user || user->password != login.password) return crow::response(401);
 
-            auto token = JwtHelper::createToken(*user);
+            auto token = JwtHelper::createToken(user.value());
 
             return crow::response(200, Token{token}.toJson());
         });

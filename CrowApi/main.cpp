@@ -9,14 +9,13 @@
 
 int main(int argc, char** array) {
     std::vector<Todo> todos = {};
-    std::vector<User> users = {User{1, "name", "email", "password"}};
 
     crow::logger::setLogLevel(crow::LogLevel::Debug);
 
     APP app;
 
     registerTodoRoutes(app, todos);
-    registerAuthRoutes(app, users);
+    registerAuthRoutes(app);
 
     // CROW_ROUTE(app, "/")([]() {
     //     auto page = crow::mustache::load_text("index.html");
