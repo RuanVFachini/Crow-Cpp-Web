@@ -1,6 +1,6 @@
 ! #/bin/bash
 
-g++ ./CrowApi/main.cpp  \
+g++ $(find CrowApi -name "*.cpp") \
     -std=c++20 \
     -I./include \
     -L./lib \

@@ -6,12 +6,12 @@
 #include <string>
 
 #include "../types/app_types.h"
-#include "db_connection.h"
+#include "DbFactory.h"
 
 namespace UserRepository {
 
 static std::optional<User> findByEmail(const std::string& email) {
-    auto sql = DbFactory::connect();
+    auto sql = DbFactory::acquire();
     soci::row row;
     soci::statement st =
         (sql.prepare << "select id, name, email, password from public.users where email = :id",
@@ -26,7 +26,7 @@ static std::optional<User> findByEmail(const std::string& email) {
 }
 
 static const User save(const User& user) {
-    auto sql = DbFactory::connect();
+    auto sql = DbFactory::acquire();
     int id;
     soci::statement st =
         (sql.prepare << "insert into public.users(name, email, password) "

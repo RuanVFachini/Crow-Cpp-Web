@@ -1,6 +1,7 @@
 // CrowApi.cpp : Este arquivo contém a função 'main'. A execução do programa começa e termina ali.
 //
 
+#include "./repositories/DbFactory.h"
 #include "crow.h"
 #include "middlewares/auth_middleware.h"
 #include "routes/auth_routes.h"
@@ -8,6 +9,7 @@
 #include "types/app_types.h"
 
 int main(int argc, char** array) {
+    DbFactory::init(10);
     std::vector<Todo> todos = {};
 
     crow::logger::setLogLevel(crow::LogLevel::Debug);
