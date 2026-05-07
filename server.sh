@@ -13,4 +13,4 @@ g++ ./CrowApi/main.cpp  \
     -lpthread \
     -lssl \
     -lcrypto
-# ./app
+./app
